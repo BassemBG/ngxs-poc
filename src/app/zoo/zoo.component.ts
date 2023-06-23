@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { AddAnimal, GetAnimal } from '../store/animal.actions';
+import { AddAnimal, DeleteAnimal, GetAnimal } from '../store/animal.actions';
 import { Observable } from 'rxjs';
 import { ZooStateModel, ZooState } from '../store/animal.state';
 
@@ -10,25 +10,28 @@ import { ZooStateModel, ZooState } from '../store/animal.state';
   styleUrls: ['./zoo.component.css'],
 })
 export class ZooComponent {
-  animalsNames : any;
+  animalsNames: any;
 
   //selects a state slice from store
   @Select(ZooState.getAnimalNameSelector) animalName$:
     | Observable<String>
     | undefined;
-    
+
   constructor(private store: Store) {
-    this.animalName$?.subscribe( (res: any) => {
+    this.animalName$?.subscribe((res: any) => {
       console.log(res);
       this.animalsNames = res;
-      
-    })
+    });
   } //create instance of Store class
 
   ngOnInit(): void {}
 
   addAnimal(animalName: string) {
     this.store.dispatch(new AddAnimal(animalName)); //trigger action when button is clicked
+  }
+
+  deleteAnimal(animalName: string) {
+    this.store.dispatch(new DeleteAnimal(animalName)); //trigger action when button is clicked
   }
 
   /*

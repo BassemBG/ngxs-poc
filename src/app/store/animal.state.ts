@@ -1,7 +1,7 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { AnimalGetInterface } from '../model/AnimalGet.model';
 import { AnimalAddInterface } from '../model/AnimalAdd.model';
-import { AddAnimal, GetAnimal } from './animal.actions';
+import { AddAnimal, DeleteAnimal, GetAnimal } from './animal.actions';
 import { Injectable } from '@angular/core';
 
 //How i want the data to be set
@@ -20,14 +20,12 @@ export interface ZooStateModel {
 //state is injectable, behaves like a service
 @Injectable()
 export class ZooState {
-  
   //selector decorator represents a slice of the state. I can select it from component
   @Selector()
   static getAnimalNameSelector(state: ZooStateModel) {
     //returns the array
     return state.animalName;
   }
-
 
   /*
     connects action with state. 
@@ -42,8 +40,24 @@ export class ZooState {
       animalName: [
         ...state.animalName,
         //add another name to the table
-        action.name
-      ]
+        action.name,
+      ],
+    });
+  }
+
+  @Action(DeleteAnimal)
+  deleteAnimalStateAction(
+    ctx: StateContext<ZooStateModel>,
+    action: DeleteAnimal
+  ) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      animalName: [
+        ...state.animalName.filter((name) => {
+          name !== action.name;
+        }),
+      ],
     });
   }
 }

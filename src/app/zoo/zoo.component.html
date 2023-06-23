@@ -19,12 +19,14 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
+                <th scope="col">Operation</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let name of animalsNames">
                 <th scope="row"> {{ animalsNames.indexOf(name) + 1 }} </th>
                 <td> {{ name }} </td>
+                <td> <button type="button" class="btn btn-danger" (click)="deleteAnimal(name)">Delete</button> </td>
               </tr>
             </tbody>
           </table>
