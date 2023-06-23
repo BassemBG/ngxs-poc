@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgxsModule } from '@ngxs/store';
 import { ZooComponent } from './zoo/zoo.component';
+import { ZooState } from './store/animal.state';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { ZooComponent } from './zoo/zoo.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgxsModule.forRoot()
+    NgxsModule.forRoot([ZooState])
   ],
   providers: [],
   bootstrap: [AppComponent]
