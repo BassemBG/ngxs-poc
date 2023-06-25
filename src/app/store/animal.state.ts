@@ -3,6 +3,7 @@ import { AnimalGetInterface } from '../model/AnimalGet.model';
 import { AnimalAddInterface } from '../model/AnimalAdd.model';
 import { AddAnimal, DeleteAnimal, GetAnimal } from './animal.actions';
 import { Injectable } from '@angular/core';
+import { patch, removeItem } from '@ngxs/store/operators';
 
 //How i want the data to be set
 export interface ZooStateModel {
@@ -50,14 +51,10 @@ export class ZooState {
     ctx: StateContext<ZooStateModel>,
     action: DeleteAnimal
   ) {
-    const state = ctx.getState();
-    ctx.setState({
-      ...state,
-      animalName: [
-        ...state.animalName.filter((name) => {
-          name !== action.name;
-        }),
-      ],
-    });
+    ctx.setState(
+      patch<ZooStateModel>({
+        animalName: removeItem<String>((name) => name === action.name),
+      })
+    );
   }
 }
