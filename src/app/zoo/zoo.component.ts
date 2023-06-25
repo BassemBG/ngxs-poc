@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { AddAnimal, DeleteAnimal, GetAnimal } from '../store/animal.actions';
+import { AddAnimal, DeleteAnimal, GetAnimal, ResetAnimals } from '../store/animal.actions';
 import { Observable } from 'rxjs';
 import { ZooStateModel, ZooState } from '../store/animal.state';
 
@@ -32,6 +32,10 @@ export class ZooComponent {
 
   deleteAnimal(animalName: string) {
     this.store.dispatch(new DeleteAnimal(animalName)); //trigger action when button is clicked
+  }
+
+  resetAnimals(){
+    this.store.dispatch(new ResetAnimals()); //trigger action when button is clicked
   }
 
   /*

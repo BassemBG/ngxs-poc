@@ -1,7 +1,12 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { AnimalGetInterface } from '../model/AnimalGet.model';
 import { AnimalAddInterface } from '../model/AnimalAdd.model';
-import { AddAnimal, DeleteAnimal, GetAnimal } from './animal.actions';
+import {
+  AddAnimal,
+  DeleteAnimal,
+  GetAnimal,
+  ResetAnimals,
+} from './animal.actions';
 import { Injectable } from '@angular/core';
 import { patch, removeItem } from '@ngxs/store/operators';
 
@@ -56,5 +61,14 @@ export class ZooState {
         animalName: removeItem<String>((name) => name === action.name),
       })
     );
+  }
+
+  @Action(ResetAnimals)
+  resetAnimalStateAction(ctx: StateContext<ZooStateModel>) {
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      animalName: [],
+    });
   }
 }
